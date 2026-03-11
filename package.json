@@ -1,0 +1,6 @@
+{
+"name":"image-upload",
+"dependencies":{
+"formidable":"^3.5.0"
+}
+}
