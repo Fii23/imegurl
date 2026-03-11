@@ -1,6 +1,9 @@
 {
-"name":"image-upload",
-"dependencies":{
-"formidable":"^3.5.0"
-}
+  "name": "imegurl",
+  "version": "1.0.0",
+  "description": "simple image uploader",
+  "dependencies": {
+    "formidable": "^3.5.0",
+    "node-fetch": "^3.3.2"
+  }
 }
