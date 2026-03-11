@@ -1,31 +1,32 @@
-import fs from "fs"
-import path from "path"
-import formidable from "formidable"
+import formidable from "formidable";
 
 export const config = {
-api: {
-bodyParser: false
-}
-}
+  api: {
+    bodyParser: false
+  }
+};
 
-export default async function handler(req,res){
+export default async function handler(req, res) {
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Method not allowed" });
+  }
 
-const form = formidable()
+  const form = new formidable.IncomingForm();
 
-form.parse(req,(err,fields,files)=>{
+  form.parse(req, (err, fields, files) => {
+    if (err) {
+      return res.status(500).json({ error: "Upload error" });
+    }
 
-let file = files.file
+    const file = files.file;
 
-let data = fs.readFileSync(file.filepath)
+    if (!file) {
+      return res.status(400).json({ error: "No file uploaded" });
+    }
 
-let uploadPath = path.join("/tmp",file.originalFilename)
-
-fs.writeFileSync(uploadPath,data)
-
-res.status(200).json({
-url:"/tmp/"+file.originalFilename
-})
-
-})
-
+    res.status(200).json({
+      message: "Upload received",
+      name: file.originalFilename
+    });
+  });
 }
